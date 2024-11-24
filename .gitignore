@@ -1,0 +1,50 @@
+# Ignore build artifacts
+*.o
+*.a
+*.so
+*.out
+*.exe
+*.dll
+
+# Ignore compiled executables
+*.out
+*.exe
+
+# Ignore dependency and compiler files
+*.d
+*.dSYM/
+*.dep
+
+# Ignore debug files
+*.log
+*.tmp
+*.stackdump
+core
+*.core
+
+# Ignore IDE/editor-specific files
+*.swp
+*.swo
+.vscode/
+.idea/
+*.bak
+*.old
+*.orig
+
+# Ignore version control backup files
+*~
+
+# Ignore generated documentation
+*.pdf
+*.html
+*.docx
+
+# Ignore other temporary files
+*.temp
+*.tmp
+*.cache
+
+# Ignore Makefile generated files
+Makefile~
+
+renderer
