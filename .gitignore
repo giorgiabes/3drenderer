@@ -48,3 +48,4 @@ core
 Makefile~
 
 renderer
+test.c
