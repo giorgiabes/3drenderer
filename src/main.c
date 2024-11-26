@@ -3,201 +3,181 @@
 #include <stdbool.h>
 #include <SDL2/SDL.h>
 
-/* Global variable to control the main game loop.
- * It indicates whether the program shoudl keep running.*/
-bool is_running = false;
+// Global variables to manage the application state
+bool is_running = false; // Flag to check if the program is running
 
-/* Pointers for SDL window and renderer.
- *	window: Represents the application renderer.
- *	renderer: Used for drawing graphics.*/
+// SDL objects for the window and renderer
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
 
-/* Global variables for graphics:
- *	color_buffer: Holds the pixel data for the screen.
- *	color_buffer_texture: SDL texture for rendering the color_buffer.*/
+// Pointer to a buffer storing pixel colors and its associated SDL texture
 uint32_t* color_buffer = NULL;
 SDL_Texture* color_buffer_texture = NULL;
 
-/* Default window dimensions, which can later be adjusted dynamically.*/
+// Dimensions of the application window
 int window_width = 800;
 int window_height = 600;
 
-/* Initializes SDL, creates a window, and sets up fullscreen mode.*/
+// Function to initialize the SDL window and renderer
 bool initialize_window(void) {
-	/* Initializes SDL subsystems. If it fails, prints an error and
-	 * returns false.*/
-	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-		fprintf(stderr, "Error initialaizing SDL.\n");
-		return false;
-	}
-	/* Queries the screen resolution and updates the window dimensions
-	 * to fullscreen value.*/
-	SDL_DisplayMode display_mode;
-	SDL_GetCurrentDisplayMode(0, &display_mode);
-	window_width = display_mode.w;
-	window_height = display_mode.h;
+        // Initialize all SDL subsystems
+        if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+                fprintf(stderr, "Error initializing SDL.\n");
+                return false;
+        }
 
-	/* Creates a borderless SDL window centered on the screen.
-	 * Prints an error if it fails and returns false.*/
-	window = SDL_CreateWindow(
-		NULL,
-		SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED,
-		window_width,
-		window_height,
-		SDL_WINDOW_BORDERLESS
-	);
-	if (!window) {
-		fprintf(stderr, "Error creating SDL window.\n");
-		return false;
-	}
+        // Get the current display mode to set window dimensions
+        SDL_DisplayMode display_mode;
+        SDL_GetCurrentDisplayMode(0, &display_mode);
+        window_width = display_mode.w;
+        window_height = display_mode.h;
 
-	/* Creates an SDL renderer to draw graphics in the window.
-	 * Prints an error if it fails and returns false.*/
-	renderer = SDL_CreateRenderer(window, -1, 0);
-	if (!renderer) {
-		fprintf(stderr, "Error creating SDL renderer.\n");
-		return false;
-	}
-	/* Sets the window to fullscreen.*/
-	SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+        // Create an SDL window in the center of the screen, borderless
+        window = SDL_CreateWindow(
+                NULL,
+                SDL_WINDOWPOS_CENTERED,
+                SDL_WINDOWPOS_CENTERED,
+                window_width,
+                window_height,
+                SDL_WINDOW_BORDERLESS
+        );
+        if (!window) {
+                fprintf(stderr, "Error creating SDL window.\n");
+                return false;
+        }
 
-	return true;
+        // Create an SDL renderer for the window
+        renderer = SDL_CreateRenderer(window, -1, 0);
+        if (!renderer) {
+                fprintf(stderr, "Error creating SDL renderer.\n");
+                return false;
+        }
+
+        // Set the window to fullscreen mode
+        SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+
+        return true;
 }
 
-/* Prepares memory and resources for rendering.*/
+// Function to allocate memory and initialize the color buffer and texture
 void setup(void) {
-	/* Allocates memory for the color_buffer to store pixel colors
-	 * for the screen.*/
-	color_buffer = (uint32_t*) malloc(sizeof(uint32_t) * window_width * window_height);
+        // Allocate memory for the color buffer
+        color_buffer = (uint32_t*) malloc(sizeof(uint32_t) * window_width * window_height);
 
-	/* Creates a texture for rendering the color_buffer on the sreen.*/
-	color_buffer_texture = SDL_CreateTexture(
-		renderer,
-		SDL_PIXELFORMAT_ARGB8888,
-		SDL_TEXTUREACCESS_STREAMING,
-		window_width,
-		window_height
-	);
+        // Create an SDL texture for the color buffer
+        color_buffer_texture = SDL_CreateTexture(
+                renderer,
+                SDL_PIXELFORMAT_ARGB8888, // Use ARGB pixel format
+                SDL_TEXTUREACCESS_STREAMING, // Allow streaming updates
+                window_width,
+                window_height
+        );
 }
 
-/* Handles user input events (keyboard and window events).*/
+// Function to handle user input and update the application state
 void process_input(void) {
-	/* Checks if any SDL event (e.g. quit, keypress) has
-	 * occorred.*/
-	SDL_Event event;
-	SDL_PollEvent(&event);
+        SDL_Event event;
+        SDL_PollEvent(&event);
 
-	/* Stops the program if:*/
-	switch (event.type) {
-		/* The user closes the window.*/
-		case SDL_QUIT: {
-			is_running = false;
-			break;
-		}
-		/* The user presses the ESC key.*/
-		case SDL_KEYDOWN: {
-			if (event.key.keysym.sym == SDLK_ESCAPE) {
-				is_running = false;
-				break;
-			}
-		}
-	}
+        // Handle different types of SDL events
+        switch (event.type) {
+                case SDL_QUIT: { // Quit event
+                        is_running = false;
+                        break;
+                }
+                case SDL_KEYDOWN: { // Key press event
+                        if (event.key.keysym.sym == SDLK_ESCAPE) { // Check for Escape key
+                                is_running = false;
+                                break;
+                        }
+                }
+        }
 }
 
+// Placeholder function for updating game logic (to be implemented later)
 void update(void) {
-	// TODO:
+        // TODO:
 }
 
-void draw_grid(void) {
-	// TODO:
-	// Draw a background grid that fills the entire window.
-	// Lines should be rendered at every raw/col multiple of 10.
-	//  __ __ __ __ __ __ __ __
-	// |__|__|__|__|__|__|__|__|
-	// |__|__|__|__|__|__|__|__|
-	// |__|__|__|__|__|__|__|__|
-	// |__|__|__|__|__|__|__|__|
-	// |__|__|__|__|__|__|__|__|
-	// |__|__|__|__|__|__|__|__|
-	// |__|__|__|__|__|__|__|__|
-	// |__|__|__|__|__|__|__|__|
+// Function to draw a grid on the color buffer
+void draw_grid() {
+        for (int y = 0; y < window_height; y += 50) { // Increment y by 50 pixels
+                for (int x = 0; x < window_width; x += 50) { // Increment x by 50 pixels
+                        // Set grid point color to yellow (ARGB format)
+                        color_buffer[(window_width * y) + x] = 0xFFFFFF00;
+                }
+        }
 }
 
-/* Renders the color_buffer to the screen.*/
+// Function to render the color buffer to the screen
 void render_color_buffer(void) {
-	/* Updates the texture (color_buffer_texture) whith pixel
-	 * data from color_buffer.*/
-	SDL_UpdateTexture(
-		color_buffer_texture,
-		NULL,
-		color_buffer,
-		(int)(window_width * sizeof(uint32_t))
-	);
-	/* Copies the thexture onto the renderer.*/
-	SDL_RenderCopy(
-		renderer,
-		color_buffer_texture,
-		NULL,
-		NULL
-	);
+        // Update the SDL texture with the color buffer data
+        SDL_UpdateTexture(
+                color_buffer_texture,
+                NULL,
+                color_buffer,
+                (int)(window_width * sizeof(uint32_t))
+        );
+
+        // Copy the texture to the renderer
+        SDL_RenderCopy(
+                renderer,
+                color_buffer_texture,
+                NULL,
+                NULL
+        );
 }
 
-/* Clears the color buffer with a specific color.*/
+// Function to clear the color buffer with a specific color
 void clear_color_buffer(uint32_t color) {
-	/* Loops through all pixels in the color_buffer
-	 * and sets each pixel to the given color.*/
-	for (int y = 0; y < window_height; y++) {
-		for (int x = 0; x < window_width; x++) {
-			color_buffer[(window_width * y) + x] = color;
-		}
-	}
+        for (int y = 0; y < window_height; y++) {
+                for (int x = 0; x < window_width; x++) {
+                        color_buffer[(window_width * y) + x] = color;
+                }
+        }
 }
 
-/* Handles rendering logic for each frame.*/
+// Function to handle the rendering of the current frame
 void render(void) {
-	/* Sets the renderer's color to red and clears the screen.*/
-	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-	SDL_RenderClear(renderer);
+        // Set the background color to black
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_RenderClear(renderer);
 
-	/* Draws the grid.*/
-	draw_grid();
+        // Draw a grid on the color buffer
+        draw_grid();
 
-	/* Renders the color_buffer.*/
-	render_color_buffer();
-	/* Clears the buffer with a yellow color*/
-	clear_color_buffer(0xFFFFFF00);
-	/* and presents the final image to the screen.*/
-	SDL_RenderPresent(renderer);
+        // Render the color buffer and clear it for the next frame
+        render_color_buffer();
+        clear_color_buffer(0xFF000000); // Clear with black color
+
+        // Present the renderer to update the window
+        SDL_RenderPresent(renderer);
 }
 
-/* Cleans up resources and quits SDL.*/
+// Function to release resources and close the SDL window
 void destroy_window(void) {
-	/* Frees allocated memory, destroys the SDL window and renderer (in
-	 * reverse order) and shuts down SDL subsystems.*/
-	free(color_buffer);
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
-	SDL_Quit();
+        free(color_buffer); // Free allocated memory for the color buffer
+        SDL_DestroyRenderer(renderer); // Destroy the renderer
+        SDL_DestroyWindow(window); // Destroy the window
+        SDL_Quit(); // Quit SDL subsystems
 }
 
-/* The program's entry point.*/
+// Main function
 int main(void) {
-	/* Initializes the window and sets up the environment.*/
-	is_running = initialize_window();
-	setup();
+        // Initialize the window and start the application
+        is_running = initialize_window();
+        setup();
 
-	/* Main game loop:*/
-	while (is_running) {
-		process_input(); // Handles user inputs.
-		update(); // Updates the application state.
-		render(); // Draws the frame.
-	}
+        // Main loop: process input, update logic, and render frames
+        while (is_running) {
+                process_input();
+                update();
+                render();
+        }
 
-	/* Cleans up resources and exits.*/
-	destroy_window();
+        // Clean up resources before exiting
+        destroy_window();
 
-	/* return 0 indicates successfull execution.*/
-	return 0;
+        return 0;
 }
+
