@@ -109,6 +109,23 @@ void draw_grid() {
         }
 }
 
+// Function to draw a rectangle on the color buffer
+void draw_rect(int x, int y, int width, int height, uint32_t color) {
+        // Iterate over the width of the rectangle
+        for (int i = 0; i < width; i++) {
+                // Iterate over the height of the rectangle
+                for (int j = 0; j < height; j++) {
+                        // Calculate the current pixel's x and y coordinates
+                        int current_x = x + i;
+                        int current_y = y + j;
+
+                        // Set the color of the current pixel in the color buffer
+                        // Ensure coordinates are within the buffer bounds to avoid overflow
+                        color_buffer[(window_width * current_y) + current_x] = color;
+                }
+        }
+}
+
 // Function to render the color buffer to the screen
 void render_color_buffer(void) {
         // Update the SDL texture with the color buffer data
@@ -145,6 +162,9 @@ void render(void) {
 
         // Draw a grid on the color buffer
         draw_grid();
+	
+	// Draw a rectangle on the color buffer
+	draw_rect(300, 200, 300, 150, 0xFFFF00FF);
 
         // Render the color buffer and clear it for the next frame
         render_color_buffer();
