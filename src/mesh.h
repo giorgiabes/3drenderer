@@ -1,8 +1,8 @@
 #ifndef MESH_H
 #define MESH_H
 
-#include "triangle.h"
 #include "vector.h"
+#include "triangle.h"
 
 #define N_MESH_VERTICES 8
 extern vec3_t mesh_vertices[N_MESH_VERTICES];
