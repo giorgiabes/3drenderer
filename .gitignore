@@ -67,3 +67,4 @@ Thumbs.db         # Thumbnail database (Windows)
 .DS_Store         # macOS file metadata
 
 renderer
+notes
