@@ -1,0 +1,69 @@
+# General build files
+
+*.d        # Dependency files
+*.o        # Object files
+*.ko       # Kernel object files
+*.obj      # Object files (Windows)
+*.elf      # Executable and Linkable Format
+
+# Compiler-generated files
+*.ilk      # Incremental linker file
+*.map      # Linker map file
+*.exp      # Export file
+
+# Precompiled headers
+*.gch      # GCC precompiled header
+*.pch      # Precompiled header (Windows)
+
+# Libraries
+*.lib      # Library files (Windows)
+*.a        # Static libraries
+*.la       # Libtool archive
+*.lo       # Libtool object file
+
+# Shared objects
+*.dll      # Dynamic-link library (Windows)
+*.so       # Shared objects (Linux)
+*.so.*     # Versioned shared objects (Linux)
+*.dylib    # Dynamic library (macOS)
+
+# Executables
+*.exe      # Executable files (Windows)
+*.out      # Output files (Unix)
+*.app      # Application bundles (macOS)
+*.i*86     # Executables for Intel architectures
+*.x86_64   # Executables for x86_64 architecture
+*.hex      # Hexadecimal binaries
+
+# Debug files
+*.dSYM/    # Debugging symbols (macOS)
+*.su       # GCC debugging output
+*.idb      # Program database intermediate file
+*.pdb      # Program database (Windows)
+
+# Kernel module compilation
+*.mod*            # Module files
+*.cmd             # Command files
+.tmp_versions/    # Temporary versions directory
+modules.order     # Module order file
+Module.symvers    # Module symbol versions
+Mkfile.old        # Old makefiles
+dkms.conf         # DKMS configuration
+
+# IDE-specific files
+.vscode/          # Visual Studio Code settings
+*.code-workspace  # Visual Studio Code workspace files
+.idea/            # IntelliJ IDEA project files
+
+# Logs and temporary files
+*.log             # Log files
+*.tmp             # Temporary files
+*.swp             # Swap files created by text editors
+*.bak             # Backup files
+
+# Other
+*.stackdump       # Stack dumps
+Thumbs.db         # Thumbnail database (Windows)
+.DS_Store         # macOS file metadata
+
+renderer
