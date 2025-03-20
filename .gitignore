@@ -1,0 +1,49 @@
+# Compiled object files, libraries, and executables
+*.o
+*.a
+*.so
+*.out
+*.exe
+
+# Debug and log files
+*.log
+*.dbg
+*.dSYM/
+
+# Editor and OS-generated files
+*.swp
+*.swo
+*~
+*.bak
+Thumbs.db
+.DS_Store
+
+# Build directories
+/build/
+/bin/
+/obj/
+
+# CMake and Makefile-generated files
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+compile_commands.json
+
+# Coverage and profiling files
+*.gcda
+*.gcno
+*.gcov
+
+# Generated documentation
+/docs/
+*.dox
+*.aux
+*.lof
+*.lot
+*.toc
+*.bbl
+*.blg
+
+renderer
+notes
